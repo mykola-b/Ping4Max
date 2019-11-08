@@ -1,5 +1,5 @@
 TO: @gmail.com
 GMAIL_USER: @gmail.com
-GMAIL_PASS: 
+GMAIL_PASS: not_used4ver1.01
 hostname: 8.8.8.8
 Delay: 60

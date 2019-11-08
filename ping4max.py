@@ -1,5 +1,5 @@
 __author__ = "mykola-b"
-__version__ = "1.00"
+__version__ = "1.01"
 import os
 import smtplib
 import time
@@ -12,7 +12,7 @@ with open("conf.txt") as file:
 # dicts_from_file now contains the dictionaries created from the text file
 TO=dicts_from_file['TO:']
 GMAIL_USER=dicts_from_file['GMAIL_USER:']
-GMAIL_PASS=dicts_from_file['GMAIL_PASS:']
+GMAIL_PASS=input('Password to Gmail')
 hostname=dicts_from_file['hostname:']
 Delay=dicts_from_file['Delay:']
 SUBJECT = 'Server is down'

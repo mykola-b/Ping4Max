@@ -1,0 +1,7 @@
+TO: @gmail.com
+smtp: smtp.gmail.com
+port_smtp: 587
+GMAIL_USER: @gmail.com
+GMAIL_PASS: PASS
+hostname: 8.8.8.8
+Delay: 60

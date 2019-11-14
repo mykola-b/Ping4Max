@@ -1,0 +1,8 @@
+receiver: reefr@gmail.com
+hostname: 8.8.80.8
+Delay: 60
+GMAIL_TOKEN: True
+sender: wefwewf@gmail.com
+PASS: errgergregerever
+smtp: smtp.gmail.com
+port_smtp: 587

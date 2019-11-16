@@ -1,0 +1,8 @@
+receiver: почта куда идут письма
+hostname: хост
+Delay: 60
+GMAIL_TOKEN: False
+sender: твоя почта 
+PASS: пароль
+smtp: Твой сервер смтп
+port_smtp: порт

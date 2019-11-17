@@ -20,48 +20,49 @@ with open("conf.txt") as file:
             key, value = line.split()
             dicts_from_file[key] = value
     except ValueError:
-        print("Value Error error occurred!")
+        print("Value Error error occurred!\nCheck conf.txt")
     except:
-        print("Some other error occurred!")
+        print("Some other error occurred!\nCheck conf.txt")
 
 # dicts_from_file now contains the dictionaries created from the text file
 try:
-    GMAIL_TOKEN=dicts_from_file['GMAIL_TOKEN:']
-    receiver=dicts_from_file['receiver:']
-    smtp=dicts_from_file['smtp:']
-    port_smtp=int(dicts_from_file['port_smtp:'])
-    sender=dicts_from_file['sender:']
-    PASS=dicts_from_file['PASS:']
-    hostname=dicts_from_file['hostname:']
-    Delay=dicts_from_file['Delay:']
+    GMAIL_TOKEN = dicts_from_file['GMAIL_TOKEN:']
+    receiver = dicts_from_file['receiver:']
+    smtp = dicts_from_file['smtp:']
+    port_smtp = int(dicts_from_file['port_smtp:'])
+    sender = dicts_from_file['sender:']
+    PASS = dicts_from_file['PASS:']
+    hostname = dicts_from_file['hostname:']
+    Delay = dicts_from_file['Delay:']
     subject = 'Server is down'
-    message_text = hostname +' is down'
+    message_text = hostname + ' is down'
 except (IndexError, KeyError):
-    print("An IndexError or KeyError occurred!")
+    print("An IndexError or KeyError occurred!\nCheck conf.txt")
 except:
-    print("Some other error occurred!")
+    print("Some other error occurred!\nCheck conf.txt")
+
 
 def smtp_send_email(receiver, smtp, port_smtp, sender, PASS, subject, message_text):
     '''
     # for send email'''
     try:
         print("Start sending Email")
-        smtpserver = smtplib.SMTP(smtp,port_smtp)
-        #Выводим на консоль лог работы с сервером (для отладки)
-        #smtpserver.set_debuglevel(1)
+        smtpserver = smtplib.SMTP(smtp, port_smtp)
+        # Выводим на консоль лог работы с сервером (для отладки)
+        # smtpserver.set_debuglevel(1)
         smtpserver.ehlo()
         smtpserver.starttls()
         smtpserver.ehlo()
         smtpserver.login(sender, PASS)
         header = 'To:' + receiver + '\n' + 'From: ' + sender
         header = header + '\n' + 'Subject:' + subject + '\n'
-        print (header)
+        print(header)
         msg = header + '\n' + message_text + ' \n\n'
         smtpserver.sendmail(sender, receiver, msg)
-        #smtpserver.close()
         smtpserver.quit()
     except:
-        print ('Something went wrong...')
+        print('Cant send email with smtp')
+
 
 def gmailtoken_generator():
     """Shows basic usage of the Gmail API.
@@ -93,6 +94,7 @@ def gmailtoken_generator():
     service = build('gmail', 'v1', credentials=creds)
 
 
+# Gmail_mailsender start here
 def get_gmail_api_instance():
     """
     Setup Gmail API instance
@@ -148,11 +150,7 @@ def Gmail_mailsender(receiver, sender, subject, message_text):
       'subject' is the subject of our email
       'message_text' is the content of the email
     """
-    # draft our message
-    # sender = 'tars.arduino@gmail.com'
-    # receiver = 'tars.arduino@gmail.com'
-    # subject = 'Just checking in!'
-    # message_text = "Hi! How's it going?"
+
 
     # authenticate with Gmail API
     service = get_gmail_api_instance()
@@ -168,24 +166,27 @@ def Gmail_mailsender(receiver, sender, subject, message_text):
 
 
 # import module for sending email
-if GMAIL_TOKEN=='True':
+if GMAIL_TOKEN == 'True':
     if not os.path.exists('token.pickle'):
         print("err: no credentials .pickle file found")
         gmailtoken_generator()
 
-#ping -n 1 to server
+
+# ping -n 1 to server
 def check_server():
     response = os.system("ping -n 1 " + hostname)
-    #and then check the response...
+    # and then check the response...
     if response == 0:
-        print( hostname, 'is up!')
+        print(hostname, 'is up!')
     else:
-        print (hostname, 'is down!')
+        print(hostname, 'is down!')
         if GMAIL_TOKEN == 'True':
             Gmail_mailsender(receiver, sender, subject, message_text)
         else:
             smtp_send_email(receiver, smtp, port_smtp, sender, PASS, subject, message_text)
-#main , run 1 time for 60 sec
+
+
+# main , run 1 time for 60 sec
 while True:
     check_server()
-    time.sleep(int(Delay)) # Delay for 1 minute (60 seconds)
+    time.sleep(int(Delay))  # Delay for 1 minute (60 seconds)

@@ -1,5 +1,5 @@
 __author__ = "mykola-b"
-__version__ = "1.3"
+__version__ = "1.4_final"
 import os
 import time
 import smtplib
@@ -150,7 +150,6 @@ def Gmail_mailsender(receiver, sender, subject, message_text):
       'subject' is the subject of our email
       'message_text' is the content of the email
     """
-
 
     # authenticate with Gmail API
     service = get_gmail_api_instance()
